@@ -1,7 +1,106 @@
 body{
-  padding-top:80px;
   word-wrap:break-word;
 }
 img{
   height: 200px;
+}
+
+:root {
+  --nav-bg: #1e1e1e;
+  --nav-text: #ffffff;
+  --nav-subtext: #aaaaaa;
+  --link-color: #4aa6ff;
+  --accent: #4aa6ff;
+  --accent-hover: #2f8fe0;
+  --bg: #1e1e1e;
+  --text: #ffffff;
+  --border: #333333;
+  --input-bg: #2a2a2a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+  list-style-type: none;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* === Left Navigation === */
+nav {
+  width: 250px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--nav-bg);
+  color: var(--nav-text);
+  gap: 1.5rem;
+  border-right: 2px solid var(--accent);
+}
+
+nav h1 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+nav h2 {
+  font-size: 0.95rem;
+  color: var(--nav-subtext);
+  margin-bottom: 2rem;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--link-color);
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+nav a:hover {
+  color: var(--accent);
+}
+
+/* === Main Content === */
+main {
+  flex: 1;
+  padding: 2rem;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+section {
+  margin-bottom: 3rem;
+}
+
+input, button {
+  display: block;
+  margin: 1rem 0;
+  padding: 0.6rem;
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background-color: var(--input-bg);
+  color: var(--text);
+}
+
+button {
+  background-color: var(--accent);
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: var(--accent-hover);
+}
+
+.stops{
+  font-size: 2rem;
 }

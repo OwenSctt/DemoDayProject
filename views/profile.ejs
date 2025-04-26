@@ -1,68 +1,66 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>21 Savage Fan Site</title>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <title>Logistics Manager</title>
 </head>
 <body>
-<div class="container">
+  <nav>
+    <h1>Logistics Manager</h1>
+    <h2>"A Simpler Way To Keep Track of All Your Logistical Needs"</h2>
+    <a href="#addAStop">Add A Stop</a>
+    <a href="#completedStops">Completed Stops</a>
+  </nav>
 
-    <div class="page-header text-center">
-        <h1><span class="fa fa-anchor"></span> Profile Page</h1>
-        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
-    </div>
+  <main>
+    <section id="addAStop">
+      <h1 class="stops font-bold uppercase my-4">Add A Delivery</h1>
+      <% if (user.local.email) { %>
+      <form action="/addAStop" method="POST">
+        <label for="time" class="">Recipient Name</label>
+        <input type="text" placeholder="John Doe" name="rname" required />
+        <label for="time">Address</label>
+        <input type="text" placeholder="1234 Main St. Philadelphia,PA 19144" name="address" required />
+        <label for="time">Time of Delivery</label>
+        <input type="time" name="time" placeholder="Time Delivered" required />
+        <label for="time">Total Packages Delivered</label>
+        <input type="number" placeholder="3" name="packages" required />
+        <label for="time">Location of Delivery</label>
+        <input type="text" placeholder="(e.g. Front Door, Side Door)" name="location" required/>
+        <label for="time">Drop-Off Location</label>
+        <input type="text" placeholder="(e.g. House, Business, Apartment)" name="type" required />
+        <label for="time">Additional Notes</label>
+        <input type="text" placeholder="(e.g. Dog, Small Street)" name="notes" />
+        <button type="submit">Submit Delivery</button>
+      </form>
+      <% } %>
+    </section>
 
-    <div class="row">
-
-        <!-- LOCAL INFORMATION -->
-        <div class="col-sm-6">
-            <div class="well">
-                <h3><span class="fa fa-user"></span> Local</h3>
-
-                <% if (user.local.email) { %>
-                    <p>
-                        <strong>id</strong>: <%= user._id %><br>
-                        <strong>email</strong>: <%= user.local.email %><br>
-                        <strong>password</strong>: <%= user.local.password %>
-                    </p>
-
-                    <a href="/unlink/local" class="btn btn-default">Unlink</a>
-                <% } else { %>
-                    <a href="/connect/local" class="btn btn-default">Connect Local</a>
-                <% } %>
-
+    <section id="completedStops">
+      <h1 class="stops uppercase font-bold my-4">Completed Stops</h1>
+      <ul class="completedStops space-y-6 ">
+        <% for(var i=0; i<completedStops.length; i++) {%>
+          <li class="completedStop">
+            <div class="flex flex-col gap-2">
+            <div><span class="grid"><span class="label font-bold">Recipient Name:</span> <span class="value uppercase"><%= completedStops[i].rname %></span></span></div>
+            <div><span class="grid"><span class="label font-bold">Address:</span> <span class="value uppercase"><%= completedStops[i].address %></span></span></div>
+            <div><span class="grid"><span class="label font-bold">Time of Delivery:</span> <span class="value uppercase"><%= completedStops[i].time %></span></span></div>
+            <div><span class="grid"><span class="label font-bold">Total Packages Delivered:</span> <span class="value uppercase"><%= completedStops[i].packages %></span></span></div>
+            <div><span class="grid"><span class="label font-bold">Location of Delivery:</span> <span class="value uppercase"><%= completedStops[i].location %></span></span></div>
+            <div><span class="grid"><span class="label font-bold">Drop-Off Location:</span> <span class="value uppercase"><%= completedStops[i].type %></span></span></div>
+            <div><span class="grid"><span class="label font-bold">Additional Notes:</span> <span class="value uppercase"><%= completedStops[i].notes %></span></span></div>
+            <div><span class="grid"><button class="remove">Remove From List</button></span></div>
             </div>
-        </div>
-        <div class="col-sm-6">
-          <h3>Messages</h3>
-          <ul class="messages">
-          <% for(var i=0; i<messages.length; i++) {%>
-            <li class="message">
-              <span><%= messages[i].name %></span>
-              <span><%= messages[i].msg %></span>
-              <span><%= messages[i].thumbUp %></span>
-              <span><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>
-              <span><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>
-              <span><i class="fa fa-trash" aria-hidden="true"></i></span>
-            </li>
-          <% } %>
-          </ul>
+          </li>
+          
+            <% } %>
+      </ul>
+    </section>
+  </main>
 
-          <h2>Add a message</h2>
-        <% if (user.local.email) { %>
-          <form action="/messages" method="POST">
-            <input type="text" value="<%= user.local.email %>" name="name">
-            <input type="text" placeholder="message" name="msg">
-            <button type="submit">Submit</button>
-          </form>
-        </div>
-        <% } %>
-
-</div>
-
-<script src="main.js"></script>
-
+  <script src="main.js"></script>
 </body>
 </html>

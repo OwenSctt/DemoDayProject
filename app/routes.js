@@ -9,11 +9,11 @@ module.exports = function(app, passport, db) {
 
     // PROFILE SECTION =========================
     app.get('/profile', isLoggedIn, function(req, res) {
-        db.collection('messages').find().toArray((err, result) => {
+        db.collection('completedStops').find().toArray((err, result) => {
           if (err) return console.log(err)
           res.render('profile.ejs', {
             user : req.user,
-            messages: result
+            completedStops: result
           })
         })
     });
@@ -28,8 +28,15 @@ module.exports = function(app, passport, db) {
 
 // message board routes ===============================================================
 
-    app.post('/messages', (req, res) => {
-      db.collection('messages').save({name: req.body.name, msg: req.body.msg, thumbUp: 0, thumbDown:0}, (err, result) => {
+    app.post('/addAStop', (req, res) => {
+      db.collection('completedStops').save(
+        {rname: req.body.rname,
+          address: req.body.address,
+          time: req.body.time,
+          packages: req.body.packages,
+          location: req.body.location,
+          type: req.body.type,
+          notes: req.body.notes,}, (err, result) => {
         if (err) return console.log(err)
         console.log('saved to database')
         res.redirect('/profile')
@@ -51,8 +58,17 @@ module.exports = function(app, passport, db) {
       })
     })
 
-    app.delete('/messages', (req, res) => {
-      db.collection('messages').findOneAndDelete({name: req.body.name, msg: req.body.msg}, (err, result) => {
+    app.delete('/completedStops', (req, res) => {
+      console.log('Delete request body:', req.body)
+      db.collection('completedStops').findOneAndDelete({
+        rname: req.body.rname,
+        address: req.body.address,
+        time: req.body.time,
+        packages: req.body.packages,
+        location: req.body.location,
+        type: req.body.type,
+        notes: req.body.notes,
+        }, (err, result) => {
         if (err) return res.send(500, err)
         res.send('Message deleted!')
       })
