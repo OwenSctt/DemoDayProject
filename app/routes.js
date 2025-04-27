@@ -36,38 +36,43 @@ module.exports = function(app, passport, db) {
           packages: req.body.packages,
           location: req.body.location,
           type: req.body.type,
-          notes: req.body.notes,}, (err, result) => {
+          notes: req.body.notes,
+          update: req.body.update}, (err, result) => {
         if (err) return console.log(err)
         console.log('saved to database')
         res.redirect('/profile')
       })
     })
 
-    app.put('/messages', (req, res) => {
-      db.collection('messages')
-      .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
-        $set: {
-          thumbUp:req.body.thumbUp + 1
+    app.post('/updateStatus', function(req, res) {
+      db.collection('completedStops').findOneAndUpdate(
+        {
+          rname: req.body.rname,
+          address: req.body.address,
+          time: req.body.time,
+          packages: req.body.packages,
+          location: req.body.location,
+          type: req.body.type,
+          notes: req.body.notes
+        },
+        {
+          $set: { update: req.body.update }
+        },
+        function(err, result) {
+          if (err) return res.status(500).send(err);
+          res.redirect('/profile');
         }
-      }, {
-        sort: {_id: -1},
-        upsert: true
-      }, (err, result) => {
-        if (err) return res.send(err)
-        res.send(result)
-      })
-    })
+      );
+    });
+    
+    
+    
 
     app.delete('/completedStops', (req, res) => {
       console.log('Delete request body:', req.body)
       db.collection('completedStops').findOneAndDelete({
         rname: req.body.rname,
         address: req.body.address,
-        time: req.body.time,
-        packages: req.body.packages,
-        location: req.body.location,
-        type: req.body.type,
-        notes: req.body.notes,
         }, (err, result) => {
         if (err) return res.send(500, err)
         res.send('Message deleted!')

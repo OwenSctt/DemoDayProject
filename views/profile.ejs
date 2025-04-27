@@ -8,12 +8,17 @@
   <title>Logistics Manager</title>
 </head>
 <body>
-  <nav>
-    <h1>Logistics Manager</h1>
-    <h2>"A Simpler Way To Keep Track of All Your Logistical Needs"</h2>
-    <a href="#addAStop">Add A Stop</a>
-    <a href="#completedStops">Completed Stops</a>
+  <nav class="bg-gray-800 text-white p-4 ">
+    <div>
+      <h1 class="text-2xl font-bold">Logistics Manager</h1>
+      <h2 class="text-sm text-gray-300">"From Inventory to Delivery, Stay in Control."</h2>
+    </div>
+    <div class="mt-2 sm:mt-0 space-x-4">
+      <a href="#addAStop" class="hover:underline">Add A Stop</a>
+      <a href="#completedStops" class="hover:underline">Completed Stops</a>
+    </div>
   </nav>
+  
 
   <main>
     <section id="addAStop">
@@ -52,6 +57,19 @@
             <div><span class="grid"><span class="label font-bold">Location of Delivery:</span> <span class="value uppercase"><%= completedStops[i].location %></span></span></div>
             <div><span class="grid"><span class="label font-bold">Drop-Off Location:</span> <span class="value uppercase"><%= completedStops[i].type %></span></span></div>
             <div><span class="grid"><span class="label font-bold">Additional Notes:</span> <span class="value uppercase"><%= completedStops[i].notes %></span></span></div>
+            <div><span class="grid"><span class="label font-bold">Manager Notes:</span> <span class="value uppercase"><%= completedStops[i].update %></span></span></div>
+            <form action="/updateStatus" method="POST">
+              <input type="hidden" name="rname" value="<%= completedStops[i].rname %>">
+              <input type="hidden" name="address" value="<%= completedStops[i].address %>">
+              <input type="hidden" name="time" value="<%= completedStops[i].time %>">
+              <input type="hidden" name="packages" value="<%= completedStops[i].packages %>">
+              <input type="hidden" name="location" value="<%= completedStops[i].location %>">
+              <input type="hidden" name="type" value="<%= completedStops[i].type %>">
+              <input type="hidden" name="notes" value="<%= completedStops[i].notes %>">
+              <input type="text" name="update" placeholder="Update notes" required>
+              <button type="submit">Update</button>
+            </form>
+            
             <div><span class="grid"><button class="remove">Remove From List</button></span></div>
             </div>
           </li>
