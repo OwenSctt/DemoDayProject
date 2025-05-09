@@ -10,9 +10,11 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@tailwindcss/postcss": "^4.1.6",
     "bcrypt": "^5.0.1",
     "cloudinary": "^1.25.1",
     "connect-mongo": "^3.2.0",
+    "daisyui": "^5.0.35",
     "dotenv": "^8.2.0",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
@@ -26,5 +28,19 @@
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "validator": "^13.6.0"
-  }
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.1.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Resilient-Labs/quick-pound-2025a.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/Resilient-Labs/quick-pound-2025a/issues"
+  },
+  "homepage": "https://github.com/Resilient-Labs/quick-pound-2025a#readme"
 }

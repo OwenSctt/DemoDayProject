@@ -1,45 +1,115 @@
 <%- include('partials/header') -%>
-<div class="container">
-  <div class="row mt-5">
-      <div class="col-6">
-          <div>
-              <p><strong>User Name</strong>: <%= user.userName %></p>
-              <p><strong>Email</strong>: <%= user.email %></p>
-              <a href="/logout" class="col-3 btn btn-primary">Logout</a>
+<div class="">
+  <div class="">
+    <div class="flex">
+      <!-- User Info Section -->
+      <nav class=" flex content-end">
+        <p><strong>User Name</strong>: <%= user.userName %></p>
+        <p><strong>Email</strong>: <%= user.email %></p>
+        <div class="mt-2 sm:mt-0 space-x-4">
+          <a href="#addAStop" class="hover:underline">Add A Stop</a>
+          <a href="#completedStops" class="hover:underline">Completed Stops</a>
+        </div>
+        <a href="/logout" class="btn btn-primary">Logout</a>
+      </nav>
+
+      <!-- Add Post Form Section -->
+      <div class="text-white">
+        <h2>Add a Post</h2>
+        <form action="/post/createPost" enctype="multipart/form-data" method="POST">
+          <div class="mb-3">
+            <label for="rname" class="form-label">Recipient Name</label>
+            <input type="text" class="form-control" id="rname" name="rname" required>
           </div>
-          <div class="mt-5">
-            <h2>Add a post</h2>
-            <form action="/post/createPost" enctype="multipart/form-data" method="POST">
-              <div class="mb-3">
-                  <label for="title" class="form-label">Title</label>
-                  <input type="text" class="form-control" id="title" name="title">
-              </div>
-              <div class="mb-3">
-                <label for="caption" class="form-label">Caption</label>
-                <textarea class="form-control" id="caption" name="caption"></textarea>
-              </div>
-              <div class="mb-3">
-                <label for="imgUpload" class="form-label">Image</label>
-                <input type="file" class="form-control" id="imageUpload" name="file">
-              </div>
-              <button type="submit" class="btn btn-primary" value="Upload">Submit</button>
-            </form>
+          <div class="mb-3">
+            <label for="address" class="form-label">Address</label>
+            <input type="text" class="form-control" id="address" name="address" required>
           </div>
+          <div class="mb-3">
+            <label for="time" class="form-label">Time of Delivery</label>
+            <input type="time" class="form-control" id="time" name="time" required>
+          </div>
+          <div class="mb-3">
+            <label for="packages" class="form-label">Total Packages Delivered</label>
+            <input type="number" class="form-control" id="packages" name="packages" required>
+          </div>
+          <div class="mb-3">
+            <label for="location" class="form-label">Location of Delivery</label>
+            <input type="text" class="form-control" id="location" name="location" required>
+          </div>
+          <div class="mb-3">
+            <label for="type" class="form-label">Drop-Off Location</label>
+            <input type="text" class="form-control" id="type" name="type" required>
+          </div>
+          <div class="mb-3">
+            <label for="imageUpload" class="form-label">Delivery Picture</label>
+            <input type="file" class="form-control" id="imageUpload" name="file" required>
+          </div>
+          <div class="mb-3">
+            <label for="notes" class="form-label">Additional Notes</label>
+            <input class="form-control" id="notes" name="notes"></input>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
       </div>
-      <div class="col-6">
-        <ul class="row list-unstyled">
-        <% for(var i=0; i<posts.length; i++) {%>
-          <li class="col-6 justify-content-between mt-5">
-            <a href="/post/<%= posts[i]._id%>">
-              <img class="img-fluid" src="<%= posts[i].image%>">
-            </a>
+      
+
+      <div class=" stops ">
+      <h2 class="completedStops " Stops</h2>
+      <!-- Posts Section -->
+      <ul class="completedStops flex gap-5 ">
+        <% for(var i = 0; i < posts.length; i++) { %>
+          <li class="completedStop bg-white shadow-sm p-3 rounded-lg mb-4">
+            <div class="flex flex-col">
+              <div>
+                <span class="font-bold">Recipient Name:</span>
+                <span class="uppercase"><%= posts[i].rname %></span>
+              </div>
+              <div>
+                <span class="font-bold">Address:</span>
+                <span class="uppercase"><%= posts[i].address %></span>
+              </div>
+              <div>
+                <span class="font-bold">Time of Delivery:</span>
+                <span class="uppercase"><%= posts[i].time %></span>
+              </div>
+              <div>
+                <span class="font-bold">Total Packages Delivered:</span>
+                <span class="uppercase"><%= posts[i].packages %></span>
+              </div>
+              <div>
+                <span class="font-bold">Location of Delivery:</span>
+                <span class="uppercase"><%= posts[i].location %></span>
+              </div>
+              <div>
+                <span class="font-bold">Drop-Off Location:</span>
+                <span class="uppercase"><%= posts[i].type %></span>
+              </div>
+              <div>
+                <span class="font-bold">Additional Notes:</span>
+                <span class="uppercase"><%= posts[i].notes %></span>
+              </div>             
+              <div>
+                <details class="mt-2">
+                  <summary class="cursor-pointer font-bold">View Image</summary>
+                  <img src="<%= posts[i].image %>" alt="Delivery Image" class="mt-2 rounded-lg w-48 h-48 object-cover">
+                </details>
+              </div>
+              <div>
+                <span class="font-bold">Manager Notes:</span>
+                <span class="uppercase"><%= posts[i].update %></span>
+              </div>
+              <div>
+                <% if (posts[i].user.toString() === user._id.toString()) { %>
+                  <form action="/post/deletePost/<%= posts[i]._id %>?_method=DELETE" method="POST">
+                    <button class="btn btn-danger mt-2" type="submit">Remove From List</button>
+                  </form>
+                <% } %>
+              </div>
+            </div>
           </li>
         <% } %>
         </ul>
-        <div class="row justify-content-center mt-5">
-          <a class="btn btn-primary" href="/feed">Return to Feed</a>
-        </div>  
-      </div>  
     </div>
   </div>
 </div>
