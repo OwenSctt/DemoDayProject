@@ -42,6 +42,8 @@ module.exports = {
         image: result.secure_url,
         cloudinaryId: result.public_id,
         user: req.user.id,
+        date: req.body.date,
+        update: req.body.update
       });
       console.log("Post has been added!");
       res.redirect("/profile");
@@ -52,13 +54,13 @@ module.exports = {
   likePost: async (req, res) => {
     try {
       await Post.findOneAndUpdate(
-        { _id: req.params.id },
+        { update: req.body.update },
         {
           $inc: { likes: 1 },
         }
       );
       console.log("Likes +1");
-      res.redirect(`/post/${req.params.id}`);
+      res.redirect(`/profile/${req.params.id}`);
     } catch (err) {
       console.log(err);
     }

@@ -1,9 +1,14 @@
 <%- include('partials/header') -%>
 
-<main class="container">
-    <div class="row justify-content-around mt-5">
-        <a href="/login" class="col-3 btn btn-primary"> Login</a>
-        <a href="/signup" class="col-3 btn btn-primary"> Signup</a>
+<main class="container flex flex-col">
+    <div class=" items-center flex flex-col">
+        <img class="logo" src="/imgs/bg-green-400.png" alt="DeliverBase Logo" />
+        <h1 class="text-8xl italic">DeliverBase</h1>
+        <h2 class="text-xl mt-3 slogan">Reliable Delivery Management for Your Small Business</h2>
+    </div>
+    <div class="flex justify-content-around mt-5">
+        <a href="/login" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-25 text-center"> Login</a>
+        <a href="/signup" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-25 text-center""> Signup</a>
     </div>
 </main>
     

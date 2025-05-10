@@ -1,40 +1,42 @@
 <%- include('partials/header') -%>
 
-<main class="container">
-  <div class="row justify-content-center">
-    <section class="col-6 mt-5">
-      <% if (locals.messages.errors) { %> <% messages.errors.forEach( el => { %>
-      <div class="alert alert-danger"><%= el.msg %></div>
-      <% }) %> <% } %> <% if (locals.messages.info) { %> <%
-      messages.info.forEach( el => { %>
-      <div class="alert alert-info"><%= el.msg %></div>
-      <% }) %> <% } %>
-      <form action="/login" method="POST">
-        <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label"
-            >Email address</label
-          >
-          <input
-            type="email"
-            class="form-control"
-            id="exampleInputEmail1"
-            aria-describedby="emailHelp"
-            name="email"
-          />
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Password</label>
-          <input
-            type="password"
-            class="form-control"
-            id="exampleInputPassword1"
-            name="password"
-          />
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
-    </section>
-  </div>
+<main class="min-h-screen flex justify-center items-center">
+  <section class="bg-white shadow-xl p-8 rounded-lg w-full max-w-md">
+    <% if (locals.messages && locals.messages.errors) { %> 
+      <% locals.messages.errors.forEach(el => { %>
+        <div class="alert alert-danger"><%= el.msg %></div>
+      <% }) %> 
+    <% } %> 
+    
+    <% if (locals.messages && locals.messages.info) { %> 
+      <% locals.messages.info.forEach(el => { %>
+        <div class="alert alert-info"><%= el.msg %></div>
+      <% }) %> 
+    <% } %>
+    
+    <form action="/login" method="POST">
+      <div class="mb-4">
+        <label for="exampleInputEmail1" class="text-lg font-medium">Email address</label>
+        <input
+          type="email"
+          class="w-full p-3 border rounded-md shadow-sm"
+          id="exampleInputEmail1"
+          aria-describedby="emailHelp"
+          name="email"
+        />
+      </div>
+      <div class="mb-4">
+        <label for="exampleInputPassword1" class="block text-lg font-medium ">Password</label>
+        <input
+          type="password"
+          class="w-full p-3 border rounded-md shadow-sm"
+          id="exampleInputPassword1"
+          name="password"
+        />
+      </div>
+      <button type="submit" class="w-full p-3 bg-green-400 text-white rounded-md hover:bg-green-700 font-bold">Login</button>
+    </form>
+  </section>
 </main>
 
 <%- include('partials/footer') -%>

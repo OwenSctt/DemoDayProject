@@ -1,27 +1,27 @@
 :root {
-    --nav-bg: #1e1e1e;
+    --nav-bg: #8f8e8e;
     --nav-text: #ffffff;
     --nav-subtext: #aaaaaa;
     --link-color: #4aa6ff;
     --accent: #4aa6ff;
     --accent-hover: #2f8fe0;
-    --bg: #1e1e1e;
+    --bg: #757575;
     --text: #ffffff;
     --border: #333333;
-    --input-bg: #2a2a2a;
+    --input-bg: #000000;
   }
-nav{
-    width: 300px;
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    background-color: var(--nav-bg);
-    color: var(--nav-text);
-    gap: 1.5rem;
-    border-right: 2px solid var(--accent);
-    height: 100%;
+
+  body{
+    background-color: var(--bg);
   }
-  section{
-    display: flex;
-  
+  *{
+    font-family: Roboto-Condensed , Arial, Helvetica, sans-serif;
+  }
+  .logo{
+    width: 100%;
+    max-width: 500px;
+    max-height: 500px;
+  }
+  .slogan{
+    font-family: cursive;
   }

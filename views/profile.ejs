@@ -1,21 +1,26 @@
 <%- include('partials/header') -%>
 <div class="">
   <div class="">
-    <div class="flex">
-      <!-- User Info Section -->
-      <nav class=" flex content-end">
-        <p><strong>User Name</strong>: <%= user.userName %></p>
-        <p><strong>Email</strong>: <%= user.email %></p>
-        <div class="mt-2 sm:mt-0 space-x-4">
-          <a href="#addAStop" class="hover:underline">Add A Stop</a>
-          <a href="#completedStops" class="hover:underline">Completed Stops</a>
+      <nav class=" top-0 sticky  bg-white p-1 flex flex-col sm:flex-row sm:items-center sm:justify-between shadow">
+        <div class="text-sm bg-green-400 rounded px-4 py-2 ">
+          <p><strong>User Name:</strong> <%= user.userName.toUpperCase() %></p>
+          <p><strong>Email:</strong> <%= user.email.toUpperCase() %></p>
+        </div>    
+        <div class="flex gap-4 underline-offset-4">
+          <a href="#addAStop" class=" font-bold hover:text-white  bg-green-400  px-4 py-2 rounded hover:bg-green-700">Add A Stop</a>
+          <a href="#completedStops" class=" font-bold  hover:text-white bg-green-400 px-4 py-2 rounded hover:bg-green-700">Completed Stops</a>
+        </div> 
+        <div>
+          <a href="/logout" class="bg-green-400 hover:text-white px-4 py-2 rounded hover:bg-green-700 font-bold">Logout</a>
         </div>
-        <a href="/logout" class="btn btn-primary">Logout</a>
       </nav>
 
       <!-- Add Post Form Section -->
-      <div class="text-white">
-        <h2>Add a Post</h2>
+      <div class="flex flex-col p-2">
+      <div class="text-white p-5">
+        <h1 class="text-center text-4xl italic">DeliverBase</h1>
+        <h2 id="addAStop" class="uppercase font-bold text-3xl mb-1">Add a Stop</h2>
+        <h3 class="font-bold text-lg mb-3">Log completed stops here</h3>
         <form action="/post/createPost" enctype="multipart/form-data" method="POST">
           <div class="mb-3">
             <label for="rname" class="form-label">Recipient Name</label>
@@ -35,67 +40,84 @@
           </div>
           <div class="mb-3">
             <label for="location" class="form-label">Location of Delivery</label>
-            <input type="text" class="form-control" id="location" name="location" required>
+            <select class="form-control" id="location" name="location" required>
+              <option value="" disabled selected>Choose One</option>
+              <option value="Business">Business</option>
+              <option value="Residential">Residential</option>
+            </select>
           </div>
           <div class="mb-3">
             <label for="type" class="form-label">Drop-Off Location</label>
-            <input type="text" class="form-control" id="type" name="type" required>
+            <select class="form-control" id="type" name="type" required>
+              <option value="" disabled selected>Select a location</option>
+              <option value="Front Door">Front Door</option>
+              <option value="Back Door">Back Door</option>
+              <option value="Side Door">Side Door</option>
+              <option value="Lobby">Lobby</option>
+              <option value="Mailroom">Mailroom</option>
+              <option value="Customer">Given To Customer</option>
+            </select>
           </div>
           <div class="mb-3">
             <label for="imageUpload" class="form-label">Delivery Picture</label>
             <input type="file" class="form-control" id="imageUpload" name="file" required>
           </div>
           <div class="mb-3">
-            <label for="notes" class="form-label">Additional Notes</label>
-            <input class="form-control" id="notes" name="notes"></input>
+            <label for="notes" class="form-label">Important Notes</label>
+            <input class="form-control" id="notes" name="notes" placeholder="e.g. (Has a dog, Deliver to red door on the side, etc.)"></input>
           </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Submit</button>
         </form>
       </div>
       
 
-      <div class=" stops ">
-      <h2 class="completedStops " Stops</h2>
+      <div class="stops p-5" >
+      <h2 id="completedStops" class="uppercase font-bold text-3xl text-white">Completed Stops</h2>
+      <h3 class="font-bold text-lg mb-3 text-white">See a history of all past deliveries</h3>
       <!-- Posts Section -->
-      <ul class="completedStops flex gap-5 ">
+      <ul class="completedStops flex gap-4 max-w-3xl ">
         <% for(var i = 0; i < posts.length; i++) { %>
-          <li class="completedStop bg-white shadow-sm p-3 rounded-lg mb-4">
+          <li class="completedStop bg-white shadow  p-3 rounded-lg mb-4">
             <div class="flex flex-col">
-              <div>
+              <div class="flex flex-col">
                 <span class="font-bold">Recipient Name:</span>
                 <span class="uppercase"><%= posts[i].rname %></span>
               </div>
-              <div>
+              <div class="flex flex-col">
                 <span class="font-bold">Address:</span>
                 <span class="uppercase"><%= posts[i].address %></span>
               </div>
-              <div>
+              <div class="flex flex-col">
                 <span class="font-bold">Time of Delivery:</span>
                 <span class="uppercase"><%= posts[i].time %></span>
               </div>
-              <div>
+              <div class="flex flex-col">
+                <span class="font-bold">Logged At:</span>
+                <span class="uppercase"><%= posts[i].createdAt %></span>
+              </div>
+              <div class="flex flex-col">
                 <span class="font-bold">Total Packages Delivered:</span>
                 <span class="uppercase"><%= posts[i].packages %></span>
               </div>
-              <div>
+              <div class="flex flex-col">
                 <span class="font-bold">Location of Delivery:</span>
-                <span class="uppercase"><%= posts[i].location %></span>
+                <span class="uppercase "><%= posts[i].location %></span>
               </div>
-              <div>
+              <div class="flex flex-col">
                 <span class="font-bold">Drop-Off Location:</span>
                 <span class="uppercase"><%= posts[i].type %></span>
               </div>
-              <div>
-                <span class="font-bold">Additional Notes:</span>
+              <div class="flex flex-col">
+                <span class="font-bold">Important Notes:</span>
                 <span class="uppercase"><%= posts[i].notes %></span>
               </div>             
               <div>
                 <details class="mt-2">
-                  <summary class="cursor-pointer font-bold">View Image</summary>
+                  <summary class="cursor-pointer font-bold">Delivery Picture</summary>
                   <img src="<%= posts[i].image %>" alt="Delivery Image" class="mt-2 rounded-lg w-48 h-48 object-cover">
                 </details>
               </div>
-              <div>
+              <div class="flex flex-col">
                 <span class="font-bold">Manager Notes:</span>
                 <span class="uppercase"><%= posts[i].update %></span>
               </div>

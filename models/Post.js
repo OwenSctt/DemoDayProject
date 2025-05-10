@@ -37,6 +37,10 @@ const PostSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  update: {
+    type: String,
+    require: false,
+  },
   cloudinaryId: {
     type: String,
     require: true,
