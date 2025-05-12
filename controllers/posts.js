@@ -5,7 +5,23 @@ module.exports = {
   getProfile: async (req, res) => {
     try {
       const posts = await Post.find({ user: req.user.id });
-      res.render("profile.ejs", { posts: posts, user: req.user });
+      const timeToMins = (timeStr) => {
+        const [hours,mins] = timeStr.split(':').map(Number)
+        return hours * 60 + mins
+      }
+
+      let average = 0
+      let count = 0
+      posts.forEach(post => {
+        if (post.time && post.eTime){
+          const actual = timeToMins(post.time)
+          const estimated = timeToMins(post.eTime)
+          average += (actual - estimated)
+          count++
+        }
+      });
+      const averageTime = count > 0 ? (average / count).toFixed(2) : null
+      res.render("profile.ejs", { posts: posts, user: req.user, averageTime });
     } catch (err) {
       console.log(err);
     }
@@ -41,6 +57,7 @@ module.exports = {
         notes: req.body.notes,
         image: result.secure_url,
         cloudinaryId: result.public_id,
+        eTime: req.body.eTime,
         user: req.user.id,
         date: req.body.date,
         update: req.body.update
@@ -56,7 +73,7 @@ module.exports = {
       await Post.findOneAndUpdate(
         { update: req.body.update },
         {
-          $inc: { likes: 1 },
+          $set: 'STATUS : Incomplete',
         }
       );
       console.log("Likes +1");

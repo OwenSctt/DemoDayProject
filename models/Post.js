@@ -13,6 +13,10 @@ const PostSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  eTime: {
+    type: String,
+    required: true,
+  },
   packages: {
     type: Number,
     required: true,
@@ -35,15 +39,15 @@ const PostSchema = new mongoose.Schema({
   },
   image: {
     type: String,
-    require: true,
+    required: true,
   },
-  update: {
+  status: {
     type: String,
-    require: false,
+    default: 'Pending',
   },
   cloudinaryId: {
     type: String,
-    require: true,
+    required: true,
   },
   createdAt: {
     type: Date,
